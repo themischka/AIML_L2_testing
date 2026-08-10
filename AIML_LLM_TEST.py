@@ -7,8 +7,6 @@ MODEL = "llama-3.1-8b-instant"
 client = Groq(api_key=API_KEY)
 st.write("Practicing connecting code and ai for AIML_L2 2026")
 
-st.caption("try it in different languages and try and see if it knows the password")
-
 # Initialize chat history
 if "messages" not in st.session_state:
     # shares var between reruns
