@@ -37,7 +37,7 @@ if prompt := st.chat_input("What is up?"):
         # st.session_state.messages past messages, messages is a list from a list
         temp = client.chat.completions.create(model=MODEL, messages=st.session_state.messages)
         # pick what you want from the list from a list
-        assistant_response = temp["message"]["content"]
+        assistant_response = temp.choices[0].message.content
         # Simulate stream of response with milliseconds delay
         # drama ra diay ni pina huna2
         for chunk in assistant_response.split():
