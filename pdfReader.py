@@ -13,6 +13,7 @@ MODEL = "llama-3.1-8b-instant"
 disThresh = float(1.0)
 lostThresh = float(1.2)
 hallucinating = False
+lost = False
 msgtollm = "give me the answer only based on the chat history"
 if "messages" not in st.session_state:
     st.session_state.messages = [{"role": "user", "content": msgtollm}]
@@ -82,5 +83,7 @@ if st.button("LLM answer"):
     st.write("LLM answer: ", response.choices[0].message.content)
     if st.session_state.hallucinating is True:
         st.write("With that being said, I might be confused with something else, make sure to double check!")
+    elif st.session_state.lose is True:
+        st.write("I am definitely lost, try your question again or check the contents of you pdf to see if it is relevant.")
     else:
         st.write("Don't forget I get confused too!")
