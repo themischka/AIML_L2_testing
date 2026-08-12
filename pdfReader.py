@@ -31,7 +31,7 @@ if file and st.button("Process File"):
     text = ""
     for page in reader.pages:
         text += page.extract_text() + "\n"
-    chunk_size = 200
+    chunk_size = 300
     overlap = 150
     step = chunk_size - overlap
     for i in range(0, len(text), step):
@@ -57,22 +57,26 @@ if st.button("Search"):
     for x in range(1):
         if result["distances"][0][x] < disThresh:
             print(result["distances"])
+            print(result["ids"])
             st.session_state.tone = "Respond confidently."
             st.session_state.hallucinating = False
             st.session_state.lost = False
             print(st.session_state.tone)
         elif lostThresh > result["distances"][0][x] > disThresh:
             print(result["distances"])
+            print(result["ids"])
             st.session_state.hallucinating = True
             st.session_state.lost = False
             st.session_state.tone = "Respond doubtfully."
             print(st.session_state.tone)
         else:
             print(result["distances"])
+            print(result["ids"])
             st.session_state.tone = "Be very doubtful, there is likely not enough information to make a response"
             print(st.session_state.tone)
             st.session_state.lost = True
     # end of test area?
+    # change this so that it prints documents of relevant +- 3 ids
     st.session_state.context = result["documents"][0][::-1]
     st.session_state.question = question
     for ans in st.session_state.context:
