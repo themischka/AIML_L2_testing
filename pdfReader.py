@@ -11,6 +11,7 @@ import os
 url = "https://raw.githubusercontent.com/themischka/AIML_L2_testing/refs/heads/main/sampleRead1.txt"
 response = requests.get(url)
 response.raise_for_status()
+sampleFile = response.text
 
 tone = str()
 API_KEY = st.secrets["GROQ_API_KEY"]
@@ -113,7 +114,7 @@ with tab2:
         print("this is a sample file to read from, ask questions about what the file is about")
         chunks = []
         st.write("File processing")
-        reader = PdfReader(BytesIO(response.content))
+        reader = sampleFile
         text = ""
         for page in reader.pages:
             text += page.extract_text() + "\n"
