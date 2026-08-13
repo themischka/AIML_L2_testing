@@ -114,10 +114,7 @@ with tab2:
         print("this is a sample file to read from, ask questions about what the file is about")
         chunks = []
         st.write("File processing")
-        reader = sampleFile
-        text = ""
-        for page in reader.pages:
-            text += page.extract_text() + "\n"
+        text = sampleFile
         chunk_size = 300
         overlap = 150
         step = chunk_size - overlap
