@@ -142,6 +142,7 @@ with tab1:
 with tab2:
     st.write("still in the testing")
     st.title("Read from sample PDFs")
+    container = st.container(border=True)
     with col1:
         st.write("Sample 1 is about Ponyo (2008)")
         if st.button("Sample 1"):
