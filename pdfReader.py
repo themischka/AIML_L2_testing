@@ -121,10 +121,11 @@ with tab2:
         for i in range(0, len(text), step):
             chunks.append(text[i: i + chunk_size])
         # print(len(chunks), "chunks: ")
+    query = st.text_input("Ask about the document")
     if st.button("Search through sample"):
         st.write("Thinking!")
         collection = st.session_state.collection
-        result = collection.query(query_texts=question, n_results=6)
+        result = collection.query(query_texts=query, n_results=6)
         # distances compared to thresh hold to filter out bad results
         for x in range(1):
             if result["distances"][0][x] < disThresh:
@@ -150,17 +151,17 @@ with tab2:
         # end of test area?
         # change this so that it prints documents of relevant +- 3 ids
         st.session_state.context = result["documents"][0][::-1]
-        st.session_state.question = question
+        st.session_state.query = query
         for ans in st.session_state.context:
             st.write(ans)
 
     if st.button("LLM answer for sample"):
         context = "\n".join(st.session_state.context)
-        question = st.session_state.question
+        query = st.session_state.query
 
         messages = [
             {"role": "system", "content": f"Answer if the user's question using only the provided document context. If the context contains enough information to answer, give the answer. {tone}"},
-            {"role": "user", "content": f"DOCUMENT CONTEXT: \n{context}\n\nQUESTION:\n{question}"}
+            {"role": "user", "content": f"DOCUMENT CONTEXT: \n{context}\n\nQUESTION:\n{query}"}
         ]
         response = client.chat.completions.create(model=MODEL, messages=messages)
         st.write("LLM answer: ", response.choices[0].message.content)
