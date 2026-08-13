@@ -8,7 +8,7 @@ import streamlit as st
 import datetime
 import os
 
-url = "https://github.com/themischka/AIML_L2_testing/blob/main/sampleRead1.txt"
+url = "https://raw.githubusercontent.com/themischka/AIML_L2_testing/refs/heads/main/sampleRead1.txt"
 response = requests.get(url)
 response.raise_for_status()
 
