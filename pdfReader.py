@@ -16,8 +16,9 @@ disThresh = float(1.0)
 lostThresh = float(1.2)
 msgtollm = "give me the answer only based on the chat history"
 
-askCont = st.container(border=True)
+
 with st.bottom:
+    askCont = st.container(border=True)
     container = st.container(border=True)
 if "hallucinating" not in st.session_state:
     st.session_state.hallucinating = False
