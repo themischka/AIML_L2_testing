@@ -27,7 +27,7 @@ if "lost" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state.messages = [{"role": "user", "content": msgtollm}]
 
-tab1 = st.tabs(["PDF file reader", "Sample PDFs"])
+tab1 = st.tabs(["PDF file reader"])
 with tab1:
     st.title("Pdf file reader")
 
