@@ -31,6 +31,7 @@ if "response" not in st.session_state:
 if "answer" not in st.session_state:
     st.session_state.answer = []
 tab1, tab2 = st.tabs(["PDF file reader", "Sample PDFs provided"])
+col1, col2 = st.columns(2)
 with tab1:
     st.title("Pdf file reader")
 
@@ -143,52 +144,54 @@ with tab1:
 with tab2:
     st.write("still in the testing")
     st.title("Read from sample PDFs")
-    st.write("Sample 1 is about Ponyo (2008)")
-    if st.button("Sample 1"):
-        chunks = []
-        st.write("File processing")
-        sampleFile = "sample1.pdf"
-        reader = PdfReader(sampleFile)
-        text = ""
-        for page in reader.pages:
-            text += page.extract_text() + "\n"
-        chunk_size = 300
-        overlap = 150
-        step = chunk_size - overlap
-        for i in range(0, len(text), step):
-            chunks.append(text[i: i + chunk_size])
-        st.write(len(chunks))
-        client = chromadb.Client()
-        time = datetime.datetime.now()
-        docName = "documents_" + time.strftime("%Y%m%d_%H%M%S_%f")
-        collection = client.create_collection(docName)
-        tags = [sampleFile + str(i) for i in range(len(chunks))]
-        collection.add(documents=chunks, ids=tags)
-        st.session_state.collection = collection
-        st.write("Chunks added to knowledge base")
-    st.write("Sample 2 is about Spirited Away (2001)")
-    if st.button("Sample 2"):
-        chunks = []
-        st.write("File processing")
-        sampleFile = "sample2.pdf"
-        reader = PdfReader(sampleFile)
-        text = ""
-        for page in reader.pages:
-            text += page.extract_text() + "\n"
-        chunk_size = 300
-        overlap = 150
-        step = chunk_size - overlap
-        for i in range(0, len(text), step):
-            chunks.append(text[i: i + chunk_size])
-        st.write(len(chunks))
-        client = chromadb.Client()
-        time = datetime.datetime.now()
-        docName = "documents_" + time.strftime("%Y%m%d_%H%M%S_%f")
-        collection = client.create_collection(docName)
-        tags = [sampleFile + str(i) for i in range(len(chunks))]
-        collection.add(documents=chunks, ids=tags)
-        st.session_state.collection = collection
-        st.write("Chunks added to knowledge base")
+    with col1:
+        st.write("Sample 1 is about Ponyo (2008)")
+        if st.button("Sample 1"):
+            chunks = []
+            st.write("File processing")
+            sampleFile = "sample1.pdf"
+            reader = PdfReader(sampleFile)
+            text = ""
+            for page in reader.pages:
+                text += page.extract_text() + "\n"
+            chunk_size = 300
+            overlap = 150
+            step = chunk_size - overlap
+            for i in range(0, len(text), step):
+                chunks.append(text[i: i + chunk_size])
+            st.write(len(chunks))
+            client = chromadb.Client()
+            time = datetime.datetime.now()
+            docName = "documents_" + time.strftime("%Y%m%d_%H%M%S_%f")
+            collection = client.create_collection(docName)
+            tags = [sampleFile + str(i) for i in range(len(chunks))]
+            collection.add(documents=chunks, ids=tags)
+            st.session_state.collection = collection
+            st.write("Chunks added to knowledge base")
+    with col2:
+        st.write("Sample 2 is about Spirited Away (2001)")
+        if st.button("Sample 2"):
+            chunks = []
+            st.write("File processing")
+            sampleFile = "sample2.pdf"
+            reader = PdfReader(sampleFile)
+            text = ""
+            for page in reader.pages:
+                text += page.extract_text() + "\n"
+            chunk_size = 300
+            overlap = 150
+            step = chunk_size - overlap
+            for i in range(0, len(text), step):
+                chunks.append(text[i: i + chunk_size])
+            st.write(len(chunks))
+            client = chromadb.Client()
+            time = datetime.datetime.now()
+            docName = "documents_" + time.strftime("%Y%m%d_%H%M%S_%f")
+            collection = client.create_collection(docName)
+            tags = [sampleFile + str(i) for i in range(len(chunks))]
+            collection.add(documents=chunks, ids=tags)
+            st.session_state.collection = collection
+            st.write("Chunks added to knowledge base")
     question = st.text_input("Ask a question about what the file is about.", placeholder="Enter here")
     if st.button("search about the sample"):
         st.write("thinking")
