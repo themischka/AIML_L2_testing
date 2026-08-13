@@ -123,7 +123,7 @@ with tab2:
         client = chromadb.Client()
         docName = "documents"
         collection = client.create_collection(docName)
-        tags = [file.name + str(i) for i in range(len(chunks))]
+        tags = [sampleFile + str(i) for i in range(len(chunks))]
         collection.add(documents=chunks, ids=tags)
         st.session_state.collection = collection
         st.write("Chunks added to knowledge base")
