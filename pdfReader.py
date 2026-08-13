@@ -56,15 +56,16 @@ with tab1:
         collection.add(documents=chunks, ids=tags)
         st.session_state.collection = collection
         st.write("Chunks added to knowledge base")
-    if question := st.chat_input("Ask about the document"):
-        st.session_state.messages.append({"role": "user", "content": question})
-        with st.chat_message("user"):
-            st.markdown(question)
-
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
-            full_response = ""
-            st.session_state.response = client.chat.completions.create(model=MODEL, messages=st.session_state.messages)
+    question = st.text_input("ask about the doc")
+    # if question := st.chat_input("Ask about the document"):
+    #     st.session_state.messages.append({"role": "user", "content": question})
+    #     with st.chat_message("user"):
+    #         st.markdown(question)
+    #
+    #     with st.chat_message("assistant"):
+    #         message_placeholder = st.empty()
+    #         full_response = ""
+    #         st.session_state.response = client.chat.completions.create(model=MODEL, messages=st.session_state.messages)
     st.session_state.messages.append({"role": "assistant", "content": st.session_state.response})
     if st.button("Search"):
         st.write("Thinking!")
@@ -73,33 +74,31 @@ with tab1:
         # distances compared to thresh hold to filter out bad results
         for x in range(1):
             if result["distances"][0][x] < disThresh:
-                print(result["distances"])
-                print(result["ids"])
+                # print(result["distances"])
+                # print(result["ids"])
                 st.session_state.tone = "Respond confidently."
                 st.session_state.hallucinating = False
                 st.session_state.lost = False
-                print(st.session_state.tone)
+                # print(st.session_state.tone)
             elif lostThresh > result["distances"][0][x] > disThresh:
-                print(result["distances"])
-                print(result["ids"])
+                # print(result["distances"])
+                # print(result["ids"])
                 st.session_state.hallucinating = True
                 st.session_state.lost = False
                 st.session_state.tone = "Respond doubtfully."
-                print(st.session_state.tone)
+                # print(st.session_state.tone)
             else:
-                print(result["distances"])
-                print(result["ids"])
+                # print(result["distances"])
+                # print(result["ids"])
                 st.session_state.tone = "Be very doubtful, there is likely not enough information to make a response"
-                print(st.session_state.tone)
+                # print(st.session_state.tone)
                 st.session_state.lost = True
         # end of test area?
         # change this so that it prints documents of relevant +- 3 ids
         st.session_state.context = result["documents"][0][::-1]
         st.session_state.question = question
-        for ans in st.session_state.context:
-            st.write(ans)
-
-    if st.button("LLM answer"):
+        # for ans in st.session_state.context:
+        #     st.write(ans)
         context = "\n".join(st.session_state.context)
         question = st.session_state.question
 
@@ -115,6 +114,23 @@ with tab1:
             st.write("I am definitely lost, try your question again or check the contents of you pdf to see if it is relevant.")
         else:
             st.write("Don't forget I get confused too!")
+
+    # if st.button("LLM answer"):
+    #     context = "\n".join(st.session_state.context)
+    #     question = st.session_state.question
+    #
+    #     messages = [
+    #         {"role": "system", "content": f"Answer if the user's question using only the provided document context. If the context contains enough information to answer, give the answer. {tone}"},
+    #         {"role": "user", "content": f"DOCUMENT CONTEXT: \n{context}\n\nQUESTION:\n{question}"}
+    #     ]
+    #     response = client.chat.completions.create(model=MODEL, messages=messages)
+    #     st.write("LLM answer: ", response.choices[0].message.content)
+    #     if st.session_state.hallucinating is True:
+    #         st.write("With that being said, I might be confused with something else, make sure to double check!")
+    #     elif st.session_state.lost is True:
+    #         st.write("I am definitely lost, try your question again or check the contents of you pdf to see if it is relevant.")
+    #     else:
+    #         st.write("Don't forget I get confused too!")
 with tab2:
     st.write("still in the testing")
     st.title("Read from sample PDFs")
