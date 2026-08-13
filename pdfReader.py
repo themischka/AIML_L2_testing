@@ -64,8 +64,7 @@ with tab1:
             message_placeholder = st.empty()
             full_response = ""
             response = client.chat.completions.create(model=MODEL, messages=st.session_state.messages)
-        message_placeholder.markdown(full_response)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
+    st.session_state.messages.append({"role": "assistant", "content": response})
     if st.button("Search"):
         st.write("Thinking!")
         collection = st.session_state.collection
