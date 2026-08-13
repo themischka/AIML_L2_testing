@@ -11,7 +11,6 @@ import os
 url = "https://raw.githubusercontent.com/themischka/AIML_L2_testing/blob/main/sample1.pdf"
 response = requests.get(url)
 response.raise_for_status()
-sampleFile = response.text
 
 tone = str()
 API_KEY = st.secrets["GROQ_API_KEY"]
@@ -114,7 +113,7 @@ with tab2:
     if st.button("Sample 1"):
         chunks = []
         st.write("File processing")
-        reader = PdfReader(file)
+        reader = PdfReader(BytesIO(response.content))
         text = ""
         for page in reader.pages:
             text += page.extract_text() + "\n"
