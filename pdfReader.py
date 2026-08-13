@@ -32,7 +32,7 @@ tab1, tab2 = st.tabs(["PDF file reader", "Sample PDFs provided"])
 col1, col2 = st.columns(2)
 with tab1:
     st.title("Pdf file reader")
-
+    container = st.container(border=True)
     file = st.file_uploader("Upload a .pdf file", "pdf")
     if file and st.button("Process File"):
         x = datetime.datetime.now()
@@ -113,7 +113,6 @@ with tab1:
         response = client.chat.completions.create(model=MODEL, messages=messages)
         # st.write("LLM answer: ", response.choices[0].message.content)
         st.session_state.answer = response.choices[0].message.content
-        container = st.container(border=True)
         if st.session_state.hallucinating is True:
             container.markdown(st.session_state.answer)
             container.write("With that being said, I might be confused with something else, make sure to double check!")
