@@ -189,25 +189,28 @@ with tab2:
         st.session_state.collection = collection
         st.write("Chunks added to knowledge base")
     question = st.text_input("Ask a question about what the file is about.")
-    if st.button("search about the sample"):
-        st.write("thinking")
-        collection = st.session_state.collection
-        result = collection.query(query_texts=question, n_results=6)
-        st.session_state.context = result["documents"][0][::-1]
-        st.session_state.question = question
-        # for ans in st.session_state.context:
-        #     st.write(ans)
-        context = "\n".join(st.session_state.context)
-        question = st.session_state.question
+    if question is None:
+        st.write("Please write a question.")
+    else:
+        if st.button("search about the sample"):
+            st.write("thinking")
+            collection = st.session_state.collection
+            result = collection.query(query_texts=question, n_results=6)
+            st.session_state.context = result["documents"][0][::-1]
+            st.session_state.question = question
+            # for ans in st.session_state.context:
+            #     st.write(ans)
+            context = "\n".join(st.session_state.context)
+            question = st.session_state.question
 
-        messages = [
-            {"role": "system",
-             "content": f"Answer if the user's question using only the provided document context. If the context contains enough information to answer, give the answer. {tone}"},
-            {"role": "user", "content": f"DOCUMENT CONTEXT: \n{context}\n\nQUESTION:\n{question}"}
-        ]
-        response = client.chat.completions.create(model=MODEL, messages=messages)
-        st.session_state.answer = response.choices[0].message.content
-        container.markdown(st.session_state.answer)
+            messages = [
+                {"role": "system",
+                 "content": f"Answer if the user's question using only the provided document context. If the context contains enough information to answer, give the answer. {tone}"},
+                {"role": "user", "content": f"DOCUMENT CONTEXT: \n{context}\n\nQUESTION:\n{question}"}
+            ]
+            response = client.chat.completions.create(model=MODEL, messages=messages)
+            st.session_state.answer = response.choices[0].message.content
+            container.markdown(st.session_state.answer)
     # if st.button("LLM sample pdf answer"):
     #     context = "\n".join(st.session_state.context)
     #     question = st.session_state.question
