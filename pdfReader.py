@@ -1,4 +1,6 @@
 # streamlit run pdfReader.py
+from io import BytesIO
+import requests
 from groq import Groq
 from pypdf import PdfReader
 import chromadb
@@ -6,7 +8,9 @@ import streamlit as st
 import datetime
 import os
 
-sampleFile = "/AIML_L2_testing.py/sampleRead1.txt"
+url = "https://github.com/themischka/AIML_L2_testing/blob/main/sampleRead1.txt"
+response = requests.get(url)
+response.raise_for_status()
 
 tone = str()
 API_KEY = st.secrets["GROQ_API_KEY"]
@@ -109,7 +113,7 @@ with tab2:
         print("this is a sample file to read from, ask questions about what the file is about")
         chunks = []
         st.write("File processing")
-        reader = PdfReader(sampleFile)
+        reader = PdfReader(BytesIO(response.content))
         text = ""
         for page in reader.pages:
             text += page.extract_text() + "\n"

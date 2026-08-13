@@ -3,3 +3,4 @@ streamlit
 chromadb
 pypdf
 dotenv
+requests
