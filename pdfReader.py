@@ -29,7 +29,7 @@ if "response" not in st.session_state:
     st.session_state.response = str()
 if "answer" not in st.session_state:
     st.session_state.answer = []
-tab1, tab2 = st.tabs(["PDF file reader", "test"])
+tab1, tab2 = st.tabs(["PDF file reader", "Sample PDFs provided"])
 with tab1:
     st.title("Pdf file reader")
 
@@ -193,8 +193,8 @@ with tab2:
         result = collection.query(query_texts=question, n_results=6)
         st.session_state.context = result["documents"][0][::-1]
         st.session_state.question = question
-        for ans in st.session_state.context:
-            st.write(ans)
+        # for ans in st.session_state.context:
+        #     st.write(ans)
         context = "\n".join(st.session_state.context)
         question = st.session_state.question
 
@@ -204,7 +204,8 @@ with tab2:
             {"role": "user", "content": f"DOCUMENT CONTEXT: \n{context}\n\nQUESTION:\n{question}"}
         ]
         response = client.chat.completions.create(model=MODEL, messages=messages)
-        st.write("LLM sample answer: ", response.choices[0].message.content)
+        st.session_state.answer = response.choices[0].message.content
+        container.markdown(st.session_state.answer)
     # if st.button("LLM sample pdf answer"):
     #     context = "\n".join(st.session_state.context)
     #     question = st.session_state.question
