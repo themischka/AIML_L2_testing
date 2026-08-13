@@ -5,6 +5,7 @@ import chromadb
 import streamlit as st
 import os
 
+sampleFile = "/AIML_L2_testing.py/sampleRead1.txt"
 
 tone = str()
 API_KEY = st.secrets["GROQ_API_KEY"]
@@ -103,10 +104,9 @@ with tab1:
 with tab2:
     if st.button("Sample file 1"):
         print("this is a sample file to read from, ask questions about what the file is about")
-        file = "sampleRead1.txt"
         chunks = []
         st.write("File processing")
-        reader = PdfReader(file)
+        reader = PdfReader(sampleFile)
         text = ""
         for page in reader.pages:
             text += page.extract_text() + "\n"
