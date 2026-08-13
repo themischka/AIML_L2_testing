@@ -55,7 +55,17 @@ with tab1:
         collection.add(documents=chunks, ids=tags)
         st.session_state.collection = collection
         st.write("Chunks added to knowledge base")
-    question = st.text_input("Ask about the document")
+    if question := st.chat_input("Ask about the document"):
+        st.session_state.messages.append({"role": "user", "content": question})
+        with st.chat_message("user"):
+            st.markdown(question)
+
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            response = client.chat.completions.create(model=MODEL, messages=st.session_state.messages)
+        message_placeholder.markdown(full_response)
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
     if st.button("Search"):
         st.write("Thinking!")
         collection = st.session_state.collection
