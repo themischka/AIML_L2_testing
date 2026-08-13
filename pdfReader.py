@@ -27,7 +27,7 @@ if "lost" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state.messages = [{"role": "user", "content": msgtollm}]
 
-tab1 = st.tabs(["PDF file reader"])
+tab1, tab2 = st.tabs(["PDF file reader", "test"])
 with tab1:
     st.title("Pdf file reader")
 
@@ -108,4 +108,5 @@ with tab1:
             st.write("I am definitely lost, try your question again or check the contents of you pdf to see if it is relevant.")
         else:
             st.write("Don't forget I get confused too!")
-
+with tab2:
+    st.write("test")
