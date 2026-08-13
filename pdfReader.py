@@ -213,7 +213,7 @@ with tab2:
         ]
         response = client.chat.completions.create(model=MODEL, messages=messages)
         st.session_state.answer = response.choices[0].message.content
-            container.markdown(st.session_state.answer)
+        container.markdown(st.session_state.answer)
     # if st.button("LLM sample pdf answer"):
     #     context = "\n".join(st.session_state.context)
     #     question = st.session_state.question
