@@ -27,6 +27,8 @@ if "collection" not in st.session_state:
     st.session_state.collection = str()
 if "response" not in st.session_state:
     st.session_state.response = str()
+if "answer" not in st.session_state:
+    st.session_state.answer = []
 tab1, tab2 = st.tabs(["PDF file reader", "test"])
 with tab1:
     st.title("Pdf file reader")
@@ -155,7 +157,8 @@ with tab2:
             chunks.append(text[i: i + chunk_size])
         st.write(len(chunks))
         client = chromadb.Client()
-        collection = client.create_collection("docName")
+        docName = "documents_" + x.strftime("%Y%m%d_%H%M%S_%f")
+        collection = client.create_collection(docName)
         tags = [sampleFile + str(i) for i in range(len(chunks))]
         collection.add(documents=chunks, ids=tags)
         st.session_state.collection = collection
@@ -175,7 +178,8 @@ with tab2:
             chunks.append(text[i: i + chunk_size])
         st.write(len(chunks))
         client = chromadb.Client()
-        collection = client.create_collection("docName")
+        docName = "documents_" + x.strftime("%Y%m%d_%H%M%S_%f")
+        collection = client.create_collection(docName)
         tags = [sampleFile + str(i) for i in range(len(chunks))]
         collection.add(documents=chunks, ids=tags)
         st.session_state.collection = collection
