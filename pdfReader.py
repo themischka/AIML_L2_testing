@@ -16,11 +16,6 @@ disThresh = float(1.0)
 lostThresh = float(1.2)
 msgtollm = "give me the answer only based on the chat history"
 
-
-def clearText():
-    st.session_state.clear = ""
-
-
 with st.bottom:
     container = st.container(border=True)
 if "hallucinating" not in st.session_state:
@@ -194,8 +189,8 @@ with tab2:
         collection.add(documents=chunks, ids=tags)
         st.session_state.collection = collection
         st.write("Chunks added to knowledge base")
-    question = st.text_input("Ask a question about what the file is about.", placeholder="Enter here", key="clear")
-    if st.button("search about the sample", on_click=clearText):
+    question = st.text_input("Ask a question about what the file is about.", placeholder="Enter here")
+    if st.button("search about the sample"):
         st.write("thinking")
         collection = st.session_state.collection
         result = collection.query(query_texts=question, n_results=6)
