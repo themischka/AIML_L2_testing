@@ -45,7 +45,7 @@ with tab1:
         st.write(len(chunks))
         client = chromadb.Client()
         # something here about check if doc is already in
-        collection = client.create_collection("documents")
+        collection = client.create_collection("documents1")
         tags = [file.name + str(i) for i in range(len(chunks))]
         collection.add(documents=chunks, ids=tags)
         st.session_state.collection = collection
