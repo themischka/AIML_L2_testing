@@ -15,6 +15,7 @@ MODEL = "llama-3.1-8b-instant"
 disThresh = float(1.0)
 lostThresh = float(1.2)
 msgtollm = "give me the answer only based on the chat history"
+container = st.container(border=True)
 if "hallucinating" not in st.session_state:
     st.session_state.hallucinating = False
 if "lost" not in st.session_state:
@@ -107,13 +108,16 @@ with tab1:
             {"role": "user", "content": f"DOCUMENT CONTEXT: \n{context}\n\nQUESTION:\n{question}"}
         ]
         response = client.chat.completions.create(model=MODEL, messages=messages)
-        st.write("LLM answer: ", response.choices[0].message.content)
+        # st.write("LLM answer: ", response.choices[0].message.content)
         if st.session_state.hallucinating is True:
-            st.write("With that being said, I might be confused with something else, make sure to double check!")
+            container.write("LLM answer: ", response.choices[0].message.content)
+            container.write("With that being said, I might be confused with something else, make sure to double check!")
         elif st.session_state.lost is True:
-            st.write("I am definitely lost, try your question again or check the contents of you pdf to see if it is relevant.")
+            container.write("LLM answer: ", response.choices[0].message.content)
+            container.write("I am definitely lost, try your question again or check the contents of you pdf to see if it is relevant.")
         else:
-            st.write("Don't forget I get confused too!")
+            container.write("LLM answer: ", response.choices[0].message.content)
+            container.write("Don't forget I get confused too!")
 
     # if st.button("LLM answer"):
     #     context = "\n".join(st.session_state.context)
@@ -183,7 +187,6 @@ with tab2:
         st.session_state.question = question
         for ans in st.session_state.context:
             st.write(ans)
-    if st.button("LLM sample pdf answer"):
         context = "\n".join(st.session_state.context)
         question = st.session_state.question
 
@@ -194,3 +197,14 @@ with tab2:
         ]
         response = client.chat.completions.create(model=MODEL, messages=messages)
         st.write("LLM sample answer: ", response.choices[0].message.content)
+    # if st.button("LLM sample pdf answer"):
+    #     context = "\n".join(st.session_state.context)
+    #     question = st.session_state.question
+    #
+    #     messages = [
+    #         {"role": "system",
+    #          "content": f"Answer if the user's question using only the provided document context. If the context contains enough information to answer, give the answer. {tone}"},
+    #         {"role": "user", "content": f"DOCUMENT CONTEXT: \n{context}\n\nQUESTION:\n{question}"}
+    #     ]
+    #     response = client.chat.completions.create(model=MODEL, messages=messages)
+    #     st.write("LLM sample answer: ", response.choices[0].message.content)
