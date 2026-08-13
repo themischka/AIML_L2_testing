@@ -16,9 +16,6 @@ disThresh = float(1.0)
 lostThresh = float(1.2)
 msgtollm = "give me the answer only based on the chat history"
 
-
-with st.bottom:
-    container = st.container(border=True)
 if "hallucinating" not in st.session_state:
     st.session_state.hallucinating = False
 if "lost" not in st.session_state:
@@ -116,6 +113,7 @@ with tab1:
         response = client.chat.completions.create(model=MODEL, messages=messages)
         # st.write("LLM answer: ", response.choices[0].message.content)
         st.session_state.answer = response.choices[0].message.content
+        container = st.container(border=True)
         if st.session_state.hallucinating is True:
             container.markdown(st.session_state.answer)
             container.write("With that being said, I might be confused with something else, make sure to double check!")
