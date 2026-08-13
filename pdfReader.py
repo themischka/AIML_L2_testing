@@ -149,7 +149,7 @@ with tab2:
         for ans in st.session_state.context:
             st.write(ans)
 
-    if st.button("LLM answer"):
+    if st.button("LLM answer for sample"):
         context = "\n".join(st.session_state.context)
         question = st.session_state.question
 
