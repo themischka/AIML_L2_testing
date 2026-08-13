@@ -121,7 +121,7 @@ with tab2:
         for i in range(0, len(text), step):
             chunks.append(text[i: i + chunk_size])
         # print(len(chunks), "chunks: ")
-    query = st.text_input("Ask about the document")
+    query = st.text_input("Ask about the sample document")
     if st.button("Search through sample"):
         st.write("Thinking!")
         collection = st.session_state.collection
