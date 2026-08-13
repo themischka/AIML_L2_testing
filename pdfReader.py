@@ -128,6 +128,26 @@ with tab2:
         collection.add(documents=chunks, ids=tags)
         st.session_state.collection = collection
         st.write("Chunks added to knowledge base")
+    if st.button("Sample 2"):
+        chunks = []
+        st.write("File processing")
+        sampleFile = "sample2.pdf"
+        reader = PdfReader(sampleFile)
+        text = ""
+        for page in reader.pages:
+            text += page.extract_text() + "\n"
+        chunk_size = 300
+        overlap = 150
+        step = chunk_size - overlap
+        for i in range(0, len(text), step):
+            chunks.append(text[i: i + chunk_size])
+        st.write(len(chunks))
+        client = chromadb.Client()
+        collection = client.create_collection("docName")
+        tags = [sampleFile + str(i) for i in range(len(chunks))]
+        collection.add(documents=chunks, ids=tags)
+        st.session_state.collection = collection
+        st.write("Chunks added to knowledge base")
     question = st.text_input("Ask a question about what the file is about.")
     if st.button("search about the sample"):
         st.write("thinking")
