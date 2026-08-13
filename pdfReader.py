@@ -3,6 +3,7 @@ from groq import Groq
 from pypdf import PdfReader
 import chromadb
 import streamlit as st
+import datetime
 import os
 
 sampleFile = "/AIML_L2_testing.py/sampleRead1.txt"
@@ -27,6 +28,7 @@ with tab1:
 
     file = st.file_uploader("Upload a .pdf file", "pdf")
     if file and st.button("Process File"):
+        x = datetime.datetime.now()
         chunks = []
         st.write("File processing")
         reader = PdfReader(file)
@@ -45,7 +47,7 @@ with tab1:
         st.write(len(chunks))
         client = chromadb.Client()
         # something here about check if doc is already in
-        collection = client.create_collection("documents1")
+        collection = client.create_collection(f"documents1 {x} ")
         tags = [file.name + str(i) for i in range(len(chunks))]
         collection.add(documents=chunks, ids=tags)
         st.session_state.collection = collection
