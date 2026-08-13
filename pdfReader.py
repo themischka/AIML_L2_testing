@@ -29,7 +29,6 @@ if "response" not in st.session_state:
 if "answer" not in st.session_state:
     st.session_state.answer = []
 tab1, tab2 = st.tabs(["PDF file reader", "Sample PDFs provided"])
-col1, col2 = st.columns(2)
 with tab1:
     st.title("Pdf file reader")
     container = st.container(border=True)
@@ -142,6 +141,7 @@ with tab1:
 with tab2:
     st.write("still in the testing")
     st.title("Read from sample PDFs")
+    col1, col2 = st.columns(2)
     container = st.container(border=True)
     with col1:
         st.write("Sample 1 is about Ponyo (2008)")
