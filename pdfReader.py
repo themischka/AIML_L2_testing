@@ -20,8 +20,6 @@ MODEL = "llama-3.1-8b-instant"
 disThresh = float(1.0)
 lostThresh = float(1.2)
 msgtollm = "give me the answer only based on the chat history"
-if "collections" not in st.session_state:
-    st.session_state.add("collections")
 if "hallucinating" not in st.session_state:
     st.session_state.hallucinating = False
 if "lost" not in st.session_state:
