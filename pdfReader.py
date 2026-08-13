@@ -8,7 +8,7 @@ import streamlit as st
 import datetime
 import os
 
-url = "https://raw.githubusercontent.com/themischka/AIML_L2_testing/refs/heads/main/sampleRead1.txt"
+url = "https://raw.githubusercontent.com/themischka/AIML_L2_testing/blob/main/sample1.pdf"
 response = requests.get(url)
 response.raise_for_status()
 sampleFile = response.text
@@ -109,4 +109,45 @@ with tab1:
         else:
             st.write("Don't forget I get confused too!")
 with tab2:
-    st.write("test")
+    st.write("still in the testing")
+    st.title("Read from sample PDFs")
+    if st.button("Sample 1"):
+        chunks = []
+        st.write("File processing")
+        reader = PdfReader(file)
+        text = ""
+        for page in reader.pages:
+            text += page.extract_text() + "\n"
+        chunk_size = 300
+        overlap = 150
+        step = chunk_size - overlap
+        for i in range(0, len(text), step):
+            chunks.append(text[i: i + chunk_size])
+        st.write(len(chunks))
+        client = chromadb.Client()
+        docName = "documents"
+        collection = client.create_collection(docName)
+        tags = [file.name + str(i) for i in range(len(chunks))]
+        collection.add(documents=chunks, ids=tags)
+        st.session_state.collection = collection
+        st.write("Chunks added to knowledge base")
+    question = st.text_input("Ask a question about what the file is about.")
+    if st.button("search about the sample"):
+        st.write("thinking")
+        collection = st.session_state.collection
+        result = collection.query(query_texts=question, n_results=6)
+        st.session_state.context = result["documents"][0][::-1]
+        st.session_state.question = question
+        for ans in st.session_state.context:
+            st.write(ans)
+    if st.button("LLM sample pdf answer"):
+        context = "\n".join(st.session_state.context)
+        question = st.session_state.question
+
+        messages = [
+            {"role": "system",
+             "content": f"Answer if the user's question using only the provided document context. If the context contains enough information to answer, give the answer. {tone}"},
+            {"role": "user", "content": f"DOCUMENT CONTEXT: \n{context}\n\nQUESTION:\n{question}"}
+        ]
+        response = client.chat.completions.create(model=MODEL, messages=messages)
+        st.write("LLM sample answer: ", response.choices[0].message.content)
