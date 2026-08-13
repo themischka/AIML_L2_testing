@@ -8,10 +8,6 @@ import streamlit as st
 import datetime
 import os
 
-url = "https://raw.githubusercontent.com/themischka/AIML_L2_testing/blob/main/sample1.pdf"
-response = requests.get(url)
-response.raise_for_status()
-
 tone = str()
 API_KEY = st.secrets["GROQ_API_KEY"]
 client = Groq(api_key=API_KEY)
@@ -113,7 +109,8 @@ with tab2:
     if st.button("Sample 1"):
         chunks = []
         st.write("File processing")
-        reader = PdfReader(BytesIO(response.content))
+        sampleFile = "sample1.pdf"
+        reader = PdfReader(sampleFile)
         text = ""
         for page in reader.pages:
             text += page.extract_text() + "\n"
