@@ -142,6 +142,7 @@ with tab1:
 with tab2:
     st.write("still in the testing")
     st.title("Read from sample PDFs")
+    st.write("Sample 1 is about Ponyo (2008)")
     if st.button("Sample 1"):
         chunks = []
         st.write("File processing")
@@ -164,6 +165,7 @@ with tab2:
         collection.add(documents=chunks, ids=tags)
         st.session_state.collection = collection
         st.write("Chunks added to knowledge base")
+    st.write("Sample 2 is about Spirited Away (2001)")
     if st.button("Sample 2"):
         chunks = []
         st.write("File processing")
