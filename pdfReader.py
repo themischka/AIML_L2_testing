@@ -157,8 +157,8 @@ with tab2:
             chunks.append(text[i: i + chunk_size])
         st.write(len(chunks))
         client = chromadb.Client()
-        x = datetime.datetime.now()
-        docName = "documents_" + x.strftime("%Y%m%d_%H%M%S_%f")
+        time = datetime.datetime.now()
+        docName = "documents_" + time.strftime("%Y%m%d_%H%M%S_%f")
         collection = client.create_collection(docName)
         tags = [sampleFile + str(i) for i in range(len(chunks))]
         collection.add(documents=chunks, ids=tags)
@@ -179,8 +179,8 @@ with tab2:
             chunks.append(text[i: i + chunk_size])
         st.write(len(chunks))
         client = chromadb.Client()
-        x = datetime.datetime.now()
-        docName = "documents_" + x.strftime("%Y%m%d_%H%M%S_%f")
+        time = datetime.datetime.now()
+        docName = "documents_" + time.strftime("%Y%m%d_%H%M%S_%f")
         collection = client.create_collection(docName)
         tags = [sampleFile + str(i) for i in range(len(chunks))]
         collection.add(documents=chunks, ids=tags)
