@@ -27,7 +27,7 @@ if "lost" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state.messages = [{"role": "user", "content": msgtollm}]
 
-tab1, tab2 = st.tabs(["PDF file reader", "Sample PDFs"])
+tab1 = st.tabs(["PDF file reader", "Sample PDFs"])
 with tab1:
     st.title("Pdf file reader")
 
@@ -109,65 +109,3 @@ with tab1:
         else:
             st.write("Don't forget I get confused too!")
 
-with tab2:
-    if st.button("Sample file 1"):
-        print("this is a sample file to read from, ask questions about what the file is about")
-        chunks = []
-        st.write("File processing")
-        text = sampleFile
-        chunk_size = 300
-        overlap = 150
-        step = chunk_size - overlap
-        for i in range(0, len(text), step):
-            chunks.append(text[i: i + chunk_size])
-        # print(len(chunks), "chunks: ")
-    query = st.text_input("Ask about the sample document")
-    if st.button("Search through sample"):
-        st.write("Thinking!")
-        collection = st.session_state.collection
-        result = collection.query(query_texts=query, n_results=6)
-        # distances compared to thresh hold to filter out bad results
-        for x in range(1):
-            if result["distances"][0][x] < disThresh:
-                print(result["distances"])
-                print(result["ids"])
-                st.session_state.tone = "Respond confidently."
-                st.session_state.hallucinating = False
-                st.session_state.lost = False
-                print(st.session_state.tone)
-            elif lostThresh > result["distances"][0][x] > disThresh:
-                print(result["distances"])
-                print(result["ids"])
-                st.session_state.hallucinating = True
-                st.session_state.lost = False
-                st.session_state.tone = "Respond doubtfully."
-                print(st.session_state.tone)
-            else:
-                print(result["distances"])
-                print(result["ids"])
-                st.session_state.tone = "Be very doubtful, there is likely not enough information to make a response"
-                print(st.session_state.tone)
-                st.session_state.lost = True
-        # end of test area?
-        # change this so that it prints documents of relevant +- 3 ids
-        st.session_state.context = result["documents"][0][::-1]
-        st.session_state.query = query
-        for ans in st.session_state.context:
-            st.write(ans)
-
-    if st.button("LLM answer for sample"):
-        context = "\n".join(st.session_state.context)
-        query = st.session_state.query
-
-        messages = [
-            {"role": "system", "content": f"Answer if the user's question using only the provided document context. If the context contains enough information to answer, give the answer. {tone}"},
-            {"role": "user", "content": f"DOCUMENT CONTEXT: \n{context}\n\nQUESTION:\n{query}"}
-        ]
-        response = client.chat.completions.create(model=MODEL, messages=messages)
-        st.write("LLM answer: ", response.choices[0].message.content)
-        if st.session_state.hallucinating is True:
-            st.write("With that being said, I might be confused with something else, make sure to double check!")
-        elif st.session_state.lost is True:
-            st.write("I am definitely lost, try your question again or check the contents of you pdf to see if it is relevant.")
-        else:
-            st.write("Don't forget I get confused too!")

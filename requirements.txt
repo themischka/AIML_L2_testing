@@ -1,6 +1,0 @@
-groq
-streamlit
-chromadb
-pypdf
-dotenv
-requests
