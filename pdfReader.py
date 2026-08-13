@@ -116,7 +116,7 @@ with tab2:
         for i in range(0, len(text), step):
             chunks.append(text[i: i + chunk_size])
         # print(len(chunks), "chunks: ")
-    if st.button("Search"):
+    if st.button("Search through sample"):
         st.write("Thinking!")
         collection = st.session_state.collection
         result = collection.query(query_texts=question, n_results=6)
