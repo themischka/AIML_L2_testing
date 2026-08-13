@@ -110,13 +110,13 @@ with tab1:
         response = client.chat.completions.create(model=MODEL, messages=messages)
         # st.write("LLM answer: ", response.choices[0].message.content)
         if st.session_state.hallucinating is True:
-            container.write("LLM answer: ", response.choices[0].message.content)
+            container.markdown(f"LLM answer: {response.choices[0].message.content}")
             container.write("With that being said, I might be confused with something else, make sure to double check!")
         elif st.session_state.lost is True:
-            container.write("LLM answer: ", response.choices[0].message.content)
+            container.markdown(f"LLM answer: {response.choices[0].message.content}")
             container.write("I am definitely lost, try your question again or check the contents of you pdf to see if it is relevant.")
         else:
-            container.write("LLM answer: ", response.choices[0].message.content)
+            container.markdown(f"LLM answer: {response.choices[0].message.content}")
             container.write("Don't forget I get confused too!")
 
     # if st.button("LLM answer"):

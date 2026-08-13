@@ -4,6 +4,7 @@ score = 0
 fruitDone = False
 starsDone = False
 col1, col2, col3 = st.columns(3)
+container = st.container(border=True)
 
 with col1:
     st.title("This or That")
@@ -43,3 +44,5 @@ with col3:
     else:
         st.write("None have been filled out")
 
+container.write("container here?")
+container.write(score)
