@@ -23,7 +23,8 @@ if "messages" not in st.session_state:
     st.session_state.messages = [{"role": "user", "content": msgtollm}]
 if "collection" not in st.session_state:
     st.session_state.collection = str()
-
+if "response" not in st.session_state:
+    st.session_state.response = str()
 tab1, tab2 = st.tabs(["PDF file reader", "test"])
 with tab1:
     st.title("Pdf file reader")
@@ -63,8 +64,8 @@ with tab1:
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
             full_response = ""
-            response = client.chat.completions.create(model=MODEL, messages=st.session_state.messages)
-    st.session_state.messages.append({"role": "assistant", "content": response})
+            st.session_state.response = client.chat.completions.create(model=MODEL, messages=st.session_state.messages)
+    st.session_state.messages.append({"role": "assistant", "content": st.session_state.response})
     if st.button("Search"):
         st.write("Thinking!")
         collection = st.session_state.collection
