@@ -6,6 +6,7 @@ from pypdf import PdfReader
 import chromadb
 import streamlit as st
 import datetime
+import base64
 import os
 
 tone = str()
@@ -27,12 +28,27 @@ if "collection" not in st.session_state:
 if "response" not in st.session_state:
     st.session_state.response = str()
 if "answer" not in st.session_state:
-    st.session_state.answer = "Answer goes here."
+    st.session_state.answer = []
 tab1, tab2 = st.tabs(["PDF file reader", "Sample PDFs provided"])
 with tab1:
     st.title("Pdf file reader", text_alignment="center")
     container = st.container(border=True)
     file = st.file_uploader("Upload a .pdf file", "pdf")
+    with st.container():
+        st.subheader("PDF Preview")
+
+        base64_pdf = base64.b64encode(pdf_bytes).decode("utf-8")
+
+        pdf_display = f"""
+        <iframe
+            src="data:application/pdf;base64,{base64_pdf}"
+            width="100%"
+            height="800"
+            type="application/pdf">
+        </iframe>
+        """
+
+        st.markdown(pdf_display, unsafe_allow_html=True)
     if file and st.button("Process File"):
         x = datetime.datetime.now()
         chunks = []
