@@ -34,12 +34,11 @@ with tab1:
     st.title("Pdf file reader", text_alignment="center")
     container = st.container(border=True)
     file = st.file_uploader("Upload a .pdf file", "pdf")
+    data = file.read()
     with st.container():
         st.subheader("PDF Preview")
 
-        base64_pdf = base64.b64encode(
-            file.getvalue()
-        ).decode("utf-8")
+        base64_pdf = base64.b64encode(data).decode("utf-8")
 
         pdf_display = f"""
         <iframe
