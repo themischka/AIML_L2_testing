@@ -338,6 +338,7 @@ with tab5:
     sideCont = st.container(border=True)
     sideCont.markdown(savedFeed.replace("\n", "  \n"))
 with tab6:
+    st.image("pixil-gif-drawing.gif")
     st.title("About")
     st.write(
         "This website was built with streamlit and python, during the Circuit Stream AIML L2 course."
