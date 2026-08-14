@@ -210,7 +210,6 @@ with tab2:
     col1, col2, col3 = st.columns(3)
     container = st.container(border=True)
     with col1:
-        st.write("Sample 1 is about Ponyo (2008)")
         if st.button("Sample 1"):
             chunks = []
             st.write("File processing")
@@ -233,8 +232,8 @@ with tab2:
             collection.add(documents=chunks, ids=tags)
             st.session_state.collection = collection
             st.write("Chunks added to knowledge base")
+        st.write("Sample 1 is about Ponyo (2008)")
     with col2:
-        st.write("Sample 2 is about Spirited Away (2001)")
         if st.button("Sample 2"):
             chunks = []
             st.write("File processing")
@@ -257,8 +256,8 @@ with tab2:
             collection.add(documents=chunks, ids=tags)
             st.session_state.collection = collection
             st.write("Chunks added to knowledge base")
+        st.write("Sample 2 is about Spirited Away (2001)")
     with col3:
-        st.write("Sample 3 is about what are RAGs")
         if st.button("Sample 3"):
             chunks = []
             st.write("File processing")
@@ -281,6 +280,7 @@ with tab2:
             collection.add(documents=chunks, ids=tags)
             st.session_state.collection = collection
             st.write("Chunks added to knowledge base")
+        st.write("Sample 3 is about what are RAGs")
 
     question = st.text_input("Ask a question about what the file is about.", placeholder="Enter here")
     if st.button("search about the sample"):
