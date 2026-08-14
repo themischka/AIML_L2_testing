@@ -96,7 +96,6 @@ with tab1:
         st.sidebar.write(f"Overlap: {st.session_state.overlap}")
         st.write(len(chunks))
         client = chromadb.Client()
-        # something here about check if doc is already in
         docName = "documents_" + x.strftime("%Y%m%d_%H%M%S_%f")
         collection = client.create_collection(docName)
         tags = [file.name + str(i) for i in range(len(chunks))]
@@ -121,9 +120,7 @@ with tab1:
                 st.session_state.tone = "Respond doubtfully."
             else:
                 st.session_state.tone = "Be very doubtful, there is likely not enough information to make a response"
-                # print(st.session_state.tone)
                 st.session_state.lost = True
-        # end of test area?
         # change this so that it prints documents of relevant +- 3 ids
         st.session_state.context = result["documents"][0][::-1]
         st.session_state.question = question
@@ -183,8 +180,6 @@ with tab2:
             text = ""
             for page in reader.pages:
                 text += page.extract_text() + "\n"
-            # chunk_size = 300
-            # overlap = 150
             step = st.session_state.chunk_size - st.session_state.overlap
             for i in range(0, len(text), step):
                 chunks.append(text[i: i + st.session_state.chunk_size])
@@ -207,8 +202,6 @@ with tab2:
             text = ""
             for page in reader.pages:
                 text += page.extract_text() + "\n"
-            # chunk_size = 300
-            # overlap = 150
             step = st.session_state.chunk_size - st.session_state.overlap
             for i in range(0, len(text), step):
                 chunks.append(text[i: i + st.session_state.chunk_size])
@@ -230,8 +223,6 @@ with tab2:
         result = collection.query(query_texts=question, n_results=6)
         st.session_state.context = result["documents"][0][::-1]
         st.session_state.question = question
-        # for ans in st.session_state.context:
-        #     st.write(ans)
         context = "\n".join(st.session_state.context)
         question = st.session_state.question
 
