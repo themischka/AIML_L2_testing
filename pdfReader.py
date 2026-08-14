@@ -30,6 +30,22 @@ if "response" not in st.session_state:
 if "answer" not in st.session_state:
     st.session_state.answer = []
 tab1, tab2 = st.tabs(["PDF file reader", "Sample PDFs provided"])
+if "chunk_size" not in st.session_state:
+    st.session_state.chunk_size = st.sidebar.slider(
+        "Chunk size",
+        min_value=100,
+        max_value=2000,
+        value=300,
+        step=50
+    )
+if "overlap" not in st.session_state:
+    st.session_state.overlap = st.sidebar.slider(
+        "Chunk overlap",
+        min_value=0,
+        max_value=500,
+        value=150,
+        step=25
+    )
 with tab1:
     st.title("Pdf file reader", text_alignment="center")
     container = st.container(border=True)
@@ -44,7 +60,7 @@ with tab1:
             text += page.extract_text() + "\n"
         st.sidebar.header("RAG Settings")
 
-        chunk_size = st.sidebar.slider(
+        st.session_state.chunk_size = st.sidebar.slider(
             "Chunk size",
             min_value=100,
             max_value=2000,
@@ -52,25 +68,25 @@ with tab1:
             step=50
         )
 
-        overlap = st.sidebar.slider(
+        st.session_state.overlap = st.sidebar.slider(
             "Chunk overlap",
             min_value=0,
             max_value=500,
             value=150,
             step=25
         )
-        if overlap >= chunk_size:
+        if st.session_state.overlap >= st.session_state.chunk_size:
             st.sidebar.error(
                 "Overlap must be smaller than chunk size."
             )
-        step = chunk_size - overlap
+        step = st.session_state.chunk_size - st.session_state.overlap
 
         chunks = []
 
         for i in range(0, len(text), step):
-            chunks.append(text[i:i + chunk_size])
-        st.sidebar.write(f"Chunk size: {chunk_size}")
-        st.sidebar.write(f"Overlap: {overlap}")
+            chunks.append(text[i:i + st.session_state.chunk_size])
+        st.sidebar.write(f"Chunk size: {st.session_state.chunk_size}")
+        st.sidebar.write(f"Overlap: {st.session_state.overlap}")
         # print(len(chunks), "chunks: ")
 
         # for x in chunks:
