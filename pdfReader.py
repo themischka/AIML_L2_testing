@@ -1,13 +1,10 @@
 # streamlit run pdfReader.py
-from io import BytesIO
-import requests
 from groq import Groq
 from pypdf import PdfReader
 import chromadb
 import streamlit as st
 import datetime
 import base64
-import os
 
 tone = str()
 API_KEY = st.secrets["GROQ_API_KEY"]
