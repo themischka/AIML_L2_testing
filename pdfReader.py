@@ -1,20 +1,22 @@
 # streamlit run pdfReader.py
-from groq import Groq
+# imports
+import groq
 from pypdf import PdfReader
 import chromadb
 import streamlit as st
 import datetime
 import base64
 
-
+# vars
 tone = str()
 API_KEY = st.secrets["GROQ_API_KEY"]
-client = Groq(api_key=API_KEY)
+client = groq.Groq(api_key=API_KEY)
 MODEL = "llama-3.1-8b-instant"
 disThresh = float(1.0)
 lostThresh = float(1.2)
 msgtollm = "give me the answer only based on the chat history"
 
+# session_state
 if "hallucinating" not in st.session_state:
     st.session_state.hallucinating = False
 if "lost" not in st.session_state:
@@ -31,10 +33,12 @@ if "chunk_size" not in st.session_state:
     st.session_state.chunk_size = 300
 if "overlap" not in st.session_state:
     st.session_state.overlap = 150
+
+# formatting
 tab1, tab2, tab3 = st.tabs(["PDF file reader", "Sample PDFs provided", "Mad-Lib Maker"])
 
+# sidebar
 st.sidebar.header("RAG Settings")
-
 st.sidebar.slider(
     "Chunk size",
     min_value=100,
