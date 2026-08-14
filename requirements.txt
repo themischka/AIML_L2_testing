@@ -1,0 +1,6 @@
+chromadb
+streamlit
+datetime
+pypdf
+groq
+base64
