@@ -31,7 +31,7 @@ if "chunk_size" not in st.session_state:
     st.session_state.chunk_size = 300
 if "overlap" not in st.session_state:
     st.session_state.overlap = 150
-tab1, tab2 = st.tabs(["PDF file reader", "Sample PDFs provided"])
+tab1, tab2, tab3 = st.tabs(["PDF file reader", "Sample PDFs provided", "Mad-Lib Maker"])
 
 st.sidebar.header("RAG Settings")
 
@@ -274,3 +274,50 @@ with tab2:
     #     ]
     #     response = client.chat.completions.create(model=MODEL, messages=messages)
     #     st.write("LLM sample answer: ", response.choices[0].message.content)
+
+with tab3:
+    st.write("this is a mad-lib maker.")
+    st.write("enter text into the following prompts, then press finish to see your mad-lib.")
+
+    nomIn = st.text_input("Give me a name, for example: Milana")
+    if nomIn:
+        st.write("you wrote: (", nomIn, ") for your name")
+    nameIN = nomIn
+
+    plIn = st.text_input("Give me a city, for example: Vancouver")
+    if plIn:
+        st.write("you wrote: (", plIn, ") for your place")
+    placeIN = plIn
+
+    emIn = st.text_input("Give me an emotion, for example: Nervous")
+    if emIn:
+        st.write("you wrote: (", emIn, ") for your emotion")
+    emotionIN = emIn
+
+    numIn = st.text_input("Give me a number greater than 5, for example: 8")
+    if numIn:
+        st.write("you wrote: (", numIn, ") for your number")
+    numberIN = numIn
+
+    foIn = st.text_input("Give me a food at a restaurant, for example: Steak")
+    if foIn:
+        st.write("you wrote: (", foIn, ") for your food")
+    foodIN = foIn
+
+    if st.button("finish"):
+        st.write(
+            nameIN, " went to go",
+            placeIN, " because",
+            nameIN, " was going to see a friend.",
+            nameIN, " was feeling very",
+            emotionIN, "to see this friend because, this friend had once eaten",
+            numberIN, foodIN, "s and left",
+            nameIN, "with the bill"
+        )
+        st.balloons()
+
+    st.write(
+        "currently testing a new part where the madlibs made will be added to the dict"
+        " and you can search about prev madlibs."
+    )
+
