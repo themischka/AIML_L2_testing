@@ -42,11 +42,35 @@ with tab1:
         text = ""
         for page in reader.pages:
             text += page.extract_text() + "\n"
-        chunk_size = 300
-        overlap = 150
+        st.sidebar.header("RAG Settings")
+
+        chunk_size = st.sidebar.slider(
+            "Chunk size",
+            min_value=100,
+            max_value=2000,
+            value=300,
+            step=50
+        )
+
+        overlap = st.sidebar.slider(
+            "Chunk overlap",
+            min_value=0,
+            max_value=500,
+            value=150,
+            step=25
+        )
+        if overlap >= chunk_size:
+            st.sidebar.error(
+                "Overlap must be smaller than chunk size."
+            )
         step = chunk_size - overlap
+
+        chunks = []
+
         for i in range(0, len(text), step):
-            chunks.append(text[i: i + chunk_size])
+            chunks.append(text[i:i + chunk_size])
+        st.sidebar.write(f"Chunk size: {chunk_size}")
+        st.sidebar.write(f"Overlap: {overlap}")
         # print(len(chunks), "chunks: ")
 
         # for x in chunks:
