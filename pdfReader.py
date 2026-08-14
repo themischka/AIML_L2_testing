@@ -304,11 +304,11 @@ with tab4:
 
     while talk:
         # queries
-        question = st.text_input("Ask a question, /add to add to database, or say /bye to quit: ")
+        question = st.text_input("Ask a question, /add to add to database, or say /bye to quit: ", key="question")
         if question == "/bye":
             talk = False
         elif question == "/add":
-            adding = st.text_input("type something to add to the database: ")
+            adding = st.text_input("type something to add to the database: ", key="adding")
             i = 4
             st.write("adding", adding, "to the database")
             sentences.append(adding)
