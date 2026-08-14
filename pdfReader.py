@@ -64,9 +64,15 @@ if overlap >= chunk_size:
     st.sidebar.error(
         "Overlap must be smaller than chunk size."
     )
+sentiment_mapping = [":material/thumb_down:", ":material/thumb_up:"]
+selected = st.feedback("thumbs")
+if selected is not None:
+    st.write(f"You selected: {sentiment_mapping[selected]}")
 
 with tab1:
-    st.title("Pdf file reader", text_alignment="center")
+    st.title("Pdf file reader")
+    st.write("This is a Pdf reader, import a pdf here and ask questions about it.")
+    st.write("If you do not have a Pdf to import check the next tab there are two samples to try out.")
     container = st.container(border=True)
     file = st.file_uploader("Upload a .pdf file", "pdf")
     if file and st.button("Process File"):
@@ -194,8 +200,8 @@ with tab1:
     #     else:
     #         st.write("Don't forget I get confused too!")
 with tab2:
-    st.write("still in the testing")
     st.title("Read from sample PDFs")
+    st.write("Click on either of the samples, wait for them to load, then ask a question.")
     col1, col2 = st.columns(2)
     container = st.container(border=True)
     with col1:
@@ -280,8 +286,8 @@ with tab2:
     #     st.write("LLM sample answer: ", response.choices[0].message.content)
 
 with tab3:
-    st.write("this is a mad-lib maker.")
-    st.write("enter text into the following prompts, then press finish to see your mad-lib.")
+    st.title("Mad-Lib maker")
+    st.write("Enter text into the following prompts, then press finish to see your mad-lib.")
 
     nomIn = st.text_input("Give me a name, for example: Milana")
     if nomIn:
@@ -320,8 +326,4 @@ with tab3:
         )
         st.balloons()
 
-    st.write(
-        "currently testing a new part where the madlibs made will be added to the dict"
-        " and you can search about prev madlibs."
-    )
 
