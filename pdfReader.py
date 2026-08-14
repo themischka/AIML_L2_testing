@@ -30,9 +30,7 @@ if "answer" not in st.session_state:
     st.session_state.answer = []
 tab1, tab2 = st.tabs(["PDF file reader", "Sample PDFs provided"])
 with tab1:
-    _, col2, _ = st.columns(3)
-    with col2:
-        st.title("Pdf file reader")
+    st.title("Pdf file reader", text_alignment="center")
     container = st.container(border=True)
     file = st.file_uploader("Upload a .pdf file", "pdf")
     if file and st.button("Process File"):
