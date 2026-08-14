@@ -37,7 +37,9 @@ with tab1:
     with st.container():
         st.subheader("PDF Preview")
 
-        base64_pdf = base64.b64encode(file.getvalue()).decode("utf-8")
+        base64_pdf = base64.b64encode(
+            file.getvalue()
+        ).decode("utf-8")
 
         pdf_display = f"""
         <iframe
