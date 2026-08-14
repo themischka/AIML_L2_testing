@@ -42,7 +42,8 @@ st.sidebar.slider(
     min_value=100,
     max_value=2000,
     value=300,
-    step=50
+    step=50,
+    key="chunk_size"
 )
 
 st.sidebar.slider(
@@ -50,7 +51,8 @@ st.sidebar.slider(
     min_value=0,
     max_value=500,
     value=150,
-    step=25
+    step=25,
+    key="overlap"
 )
 
 chunk_size = st.session_state.chunk_size
