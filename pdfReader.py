@@ -27,7 +27,7 @@ if "collection" not in st.session_state:
 if "response" not in st.session_state:
     st.session_state.response = str()
 if "answer" not in st.session_state:
-    st.session_state.answer = ["Answer goes here."]
+    st.session_state.answer = "Answer goes here."
 tab1, tab2 = st.tabs(["PDF file reader", "Sample PDFs provided"])
 with tab1:
     st.title("Pdf file reader", text_alignment="center")
