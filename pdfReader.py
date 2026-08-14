@@ -278,61 +278,62 @@ with tab3:
         )
         st.balloons()
 with tab4:
-    client = chromadb.PersistentClient(path="./my_db")
-
-    disThres = float(0.42)
-    talk = True
-
-    # making a collection (a table of data) holds all the knowledge
-    collection = client.get_or_create_collection("animals")
-    sentences = [
-        "Good dogs, like Snoopy are the best.",
-        "Snoopy is a good dog.",
-        "Dogs are not good",
-        "The smoke is strong today."
-        # "Милана хочет есть.",
-        # "Milana wants to eat.",
-        # "Милана думала что там есть яблока здесь.",
-        # "там нет яблоко здешь."
-        # "니 생일은 언재?",
-        # "내 생일은 어제였"
-    ]
-
-    # unique tags
-    tags = ["1", "2", "3", "4"]
-    collection.add(documents=sentences, ids=tags)
-
-    while talk:
-        # queries
-        question = st.text_input("Ask a question, /add to add to database, or say /bye to quit: ", key="talkQues")
-        if question == "/bye":
-            talk = False
-        elif question == "/add":
-            adding = st.text_input("type something to add to the database: ", key="talkadding")
-            i = 4
-            st.write("adding", adding, "to the database")
-            sentences.append(adding)
-            st.write(sentences, sep="\n")
-            # and then do something to make it add another number to collection
-            nxtHigh = str(max(int(x) for x in tags) + 1)
-            tags.append(nxtHigh)
-            collection.add(documents=sentences, ids=tags)
-            st.write(tags, sep="\n")
-        else:
-            result = collection.query(query_texts=question, n_results=2)
-
-            # results of distance aren't floats, so they cannot be compared
-
-            # prints the sentences that are most similar to the query
-            print(result["documents"])
-            # prints the ids, the tag that was assigned to the sentences
-            print(result["ids"])
-            # prints the "distance" between the query and the sentences in the database
-            print(result["distances"])
-            for x in range(len(result["distances"][0])):
-                print(result["distances"][0][x])
-                if result["distances"][0][x] > disThres:
-                    print("the results may not be accurate, I may be hallucinating")
-
-
-
+    st.write("tab 4 is a work in progress")
+    # client = chromadb.PersistentClient(path="./my_db")
+    #
+    # disThres = float(0.42)
+    # talk = True
+    #
+    # # making a collection (a table of data) holds all the knowledge
+    # collection = client.get_or_create_collection("animals")
+    # sentences = [
+    #     "Good dogs, like Snoopy are the best.",
+    #     "Snoopy is a good dog.",
+    #     "Dogs are not good",
+    #     "The smoke is strong today."
+    #     # "Милана хочет есть.",
+    #     # "Milana wants to eat.",
+    #     # "Милана думала что там есть яблока здесь.",
+    #     # "там нет яблоко здешь."
+    #     # "니 생일은 언재?",
+    #     # "내 생일은 어제였"
+    # ]
+    #
+    # # unique tags
+    # tags = ["1", "2", "3", "4"]
+    # collection.add(documents=sentences, ids=tags)
+    #
+    # while talk:
+    #     # queries
+    #     question = st.text_input("Ask a question, /add to add to database, or say /bye to quit: ", key="talkQues")
+    #     if question == "/bye":
+    #         talk = False
+    #     elif question == "/add":
+    #         adding = st.text_input("type something to add to the database: ", key="talkadding")
+    #         i = 4
+    #         st.write("adding", adding, "to the database")
+    #         sentences.append(adding)
+    #         st.write(sentences, sep="\n")
+    #         # and then do something to make it add another number to collection
+    #         nxtHigh = str(max(int(x) for x in tags) + 1)
+    #         tags.append(nxtHigh)
+    #         collection.add(documents=sentences, ids=tags)
+    #         st.write(tags, sep="\n")
+    #     else:
+    #         result = collection.query(query_texts=question, n_results=2)
+    #
+    #         # results of distance aren't floats, so they cannot be compared
+    #
+    #         # prints the sentences that are most similar to the query
+    #         print(result["documents"])
+    #         # prints the ids, the tag that was assigned to the sentences
+    #         print(result["ids"])
+    #         # prints the "distance" between the query and the sentences in the database
+    #         print(result["distances"])
+    #         for x in range(len(result["distances"][0])):
+    #             print(result["distances"][0][x])
+    #             if result["distances"][0][x] > disThres:
+    #                 print("the results may not be accurate, I may be hallucinating")
+    #
+    #
+    #
