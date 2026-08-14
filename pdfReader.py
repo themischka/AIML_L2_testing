@@ -90,8 +90,6 @@ with tab1:
             text += page.extract_text() + "\n"
         step = st.session_state.chunk_size - st.session_state.overlap
 
-        chunks = []
-
         for i in range(0, len(text), step):
             chunks.append(text[i:i + st.session_state.chunk_size])
         st.sidebar.write(f"Chunk size: {st.session_state.chunk_size}")
@@ -163,11 +161,9 @@ with tab2:
             text = ""
             for page in reader.pages:
                 text += page.extract_text() + "\n"
-            chunk_size = 300
-            overlap = 150
-            step = chunk_size - overlap
+            step = st.session_state.chunk_size - st.session_state.overlap
             for i in range(0, len(text), step):
-                chunks.append(text[i: i + chunk_size])
+                chunks.append(text[i: i + st.session_state.chunk_size])
             st.write(len(chunks))
             client = chromadb.Client()
             time = datetime.datetime.now()
@@ -187,11 +183,11 @@ with tab2:
             text = ""
             for page in reader.pages:
                 text += page.extract_text() + "\n"
-            chunk_size = 300
-            overlap = 150
-            step = chunk_size - overlap
+            # chunk_size = 300
+            # overlap = 150
+            step = st.session_state.chunk_size - st.session_state.overlap
             for i in range(0, len(text), step):
-                chunks.append(text[i: i + chunk_size])
+                chunks.append(text[i: i + st.session_state.chunk_size])
             st.write(len(chunks))
             client = chromadb.Client()
             time = datetime.datetime.now()
@@ -211,11 +207,11 @@ with tab2:
             text = ""
             for page in reader.pages:
                 text += page.extract_text() + "\n"
-            chunk_size = 300
-            overlap = 150
-            step = chunk_size - overlap
+            # chunk_size = 300
+            # overlap = 150
+            step = st.session_state.chunk_size - st.session_state.overlap
             for i in range(0, len(text), step):
-                chunks.append(text[i: i + chunk_size])
+                chunks.append(text[i: i + st.session_state.chunk_size])
             st.write(len(chunks))
             client = chromadb.Client()
             time = datetime.datetime.now()
