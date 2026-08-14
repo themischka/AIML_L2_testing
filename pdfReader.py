@@ -1,6 +1,6 @@
 # streamlit run pdfReader.py
 # imports
-import groq
+from groq import Groq
 from pypdf import PdfReader
 import chromadb
 import streamlit as st
@@ -10,7 +10,7 @@ import base64
 # vars
 tone = str()
 API_KEY = st.secrets["GROQ_API_KEY"]
-client = groq.Groq(api_key=API_KEY)
+client = Groq(api_key=API_KEY)
 MODEL = "llama-3.1-8b-instant"
 disThresh = float(1.0)
 lostThresh = float(1.2)
