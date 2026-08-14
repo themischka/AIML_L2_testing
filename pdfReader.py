@@ -207,7 +207,7 @@ with tab1:
 with tab2:
     st.title("Read from sample PDFs")
     st.write("Click on either of the samples, wait for them to load, then ask a question.")
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     container = st.container(border=True)
     with col1:
         st.write("Sample 1 is about Ponyo (2008)")
@@ -239,6 +239,30 @@ with tab2:
             chunks = []
             st.write("File processing")
             sampleFile = "sample2.pdf"
+            reader = PdfReader(sampleFile)
+            text = ""
+            for page in reader.pages:
+                text += page.extract_text() + "\n"
+            chunk_size = 300
+            overlap = 150
+            step = chunk_size - overlap
+            for i in range(0, len(text), step):
+                chunks.append(text[i: i + chunk_size])
+            st.write(len(chunks))
+            client = chromadb.Client()
+            time = datetime.datetime.now()
+            docName = "documents_" + time.strftime("%Y%m%d_%H%M%S_%f")
+            collection = client.create_collection(docName)
+            tags = [sampleFile + str(i) for i in range(len(chunks))]
+            collection.add(documents=chunks, ids=tags)
+            st.session_state.collection = collection
+            st.write("Chunks added to knowledge base")
+    with col3:
+        st.write("Sample 3 is about what are RAGs")
+        if st.button("Sample 3"):
+            chunks = []
+            st.write("File processing")
+            sampleFile = "PDF READER.pdf"
             reader = PdfReader(sampleFile)
             text = ""
             for page in reader.pages:
