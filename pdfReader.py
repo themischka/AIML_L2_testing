@@ -34,7 +34,7 @@ if "overlap" not in st.session_state:
     st.session_state.overlap = 150
 
 # -------formatting tabs------ #
-tab1, tab2, tab3, tab4 = st.tabs(["PDF file reader", "Sample PDFs provided", "Mad-Lib Maker", "Ask the database"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["PDF file reader", "Sample PDFs provided", "Mad-Lib Maker", "Ask the database", "Feedback"])
 
 # -------formatting sidebar------ #
 st.sidebar.header("RAG Settings")
@@ -63,17 +63,6 @@ if overlap >= chunk_size:
     st.sidebar.error(
         "Overlap must be smaller than chunk size."
     )
-
-# -------feedback area------ #
-with st.sidebar:
-    st.write("Write your feed back here")
-    feedback = st.text_input("type feedback here")
-    with open("count.txt", "a") as f:
-        f.write(f"\n {feedback}")
-    with open("count.txt") as f:
-        savedFeed = f.read()
-    sideCont = st.container(border=True)
-    sideCont.markdown(savedFeed.replace("\n", "  \n"))
 
 # -------main pdf reader------ #
 with tab1:
@@ -337,3 +326,14 @@ with tab4:
     #
     #
     #
+with tab5:
+    # -------feedback area------ #
+    st.title("Feedback page")
+    st.write("Write your feed back here.")
+    feedback = st.text_input("type feedback here")
+    with open("count.txt", "a") as f:
+        f.write(f"\n {feedback}")
+    with open("count.txt") as f:
+        savedFeed = f.read()
+    sideCont = st.container(border=True)
+    sideCont.markdown(savedFeed.replace("\n", "  \n"))
