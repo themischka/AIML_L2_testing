@@ -34,22 +34,6 @@ with tab1:
     st.title("Pdf file reader", text_alignment="center")
     container = st.container(border=True)
     file = st.file_uploader("Upload a .pdf file", "pdf")
-    data = file.read()
-    with st.container():
-        st.subheader("PDF Preview")
-
-        base64_pdf = base64.b64encode(data).decode("utf-8")
-
-        pdf_display = f"""
-        <iframe
-            src="data:application/pdf;base64,{base64_pdf}"
-            width="100%"
-            height="800"
-            type="application/pdf">
-        </iframe>
-        """
-
-        st.markdown(pdf_display, unsafe_allow_html=True)
     if file and st.button("Process File"):
         x = datetime.datetime.now()
         chunks = []
@@ -76,6 +60,22 @@ with tab1:
         collection.add(documents=chunks, ids=tags)
         st.session_state.collection = collection
         st.write("Chunks added to knowledge base")
+        data = file.read()
+        with st.container():
+            st.subheader("PDF Preview")
+
+            base64_pdf = base64.b64encode(data).decode("utf-8")
+
+            pdf_display = f"""
+            <iframe
+                src="data:application/pdf;base64,{base64_pdf}"
+                width="100%"
+                height="800"
+                type="application/pdf">
+            </iframe>
+            """
+
+            st.markdown(pdf_display, unsafe_allow_html=True)
     question = st.text_input("ask about the doc")
     # if question := st.chat_input("Ask about the document"):
     #     st.session_state.messages.append({"role": "user", "content": question})
