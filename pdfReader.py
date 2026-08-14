@@ -30,22 +30,7 @@ if "response" not in st.session_state:
 if "answer" not in st.session_state:
     st.session_state.answer = []
 tab1, tab2 = st.tabs(["PDF file reader", "Sample PDFs provided"])
-if "chunk_size" not in st.session_state:
-    st.session_state.chunk_size = st.sidebar.slider(
-        "Chunk size",
-        min_value=100,
-        max_value=2000,
-        value=300,
-        step=50
-    )
-if "overlap" not in st.session_state:
-    st.session_state.overlap = st.sidebar.slider(
-        "Chunk overlap",
-        min_value=0,
-        max_value=500,
-        value=150,
-        step=25
-    )
+
 with tab1:
     st.title("Pdf file reader", text_alignment="center")
     container = st.container(border=True)
@@ -60,7 +45,7 @@ with tab1:
             text += page.extract_text() + "\n"
         st.sidebar.header("RAG Settings")
 
-        st.session_state.chunk_size = st.sidebar.slider(
+        st.sidebar.slider(
             "Chunk size",
             min_value=100,
             max_value=2000,
@@ -68,14 +53,18 @@ with tab1:
             step=50
         )
 
-        st.session_state.overlap = st.sidebar.slider(
+        st.sidebar.slider(
             "Chunk overlap",
             min_value=0,
             max_value=500,
             value=150,
             step=25
         )
-        if st.session_state.overlap >= st.session_state.chunk_size:
+
+        chunk_size = st.session_state.chunk_size
+        overlap = st.session_state.overlap
+
+        if overlap >= chunk_size:
             st.sidebar.error(
                 "Overlap must be smaller than chunk size."
             )
