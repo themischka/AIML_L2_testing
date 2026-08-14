@@ -29,6 +29,10 @@ if "response" not in st.session_state:
     st.session_state.response = str()
 if "answer" not in st.session_state:
     st.session_state.answer = []
+if "chunk_size" not in st.session_state:
+    st.session_state.chunk_size = 300
+if "overlap" not in st.session_state:
+    st.session_state.overlap = 150
 tab1, tab2 = st.tabs(["PDF file reader", "Sample PDFs provided"])
 
 with tab1:
