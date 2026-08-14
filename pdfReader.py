@@ -93,7 +93,7 @@ with tab1:
         collection.add(documents=chunks, ids=tags)
         st.session_state.collection = collection
         st.write("Chunks added to knowledge base")
-    question = st.text_input("ask about the doc")
+    question = st.text_input("Ask about the uploaded file.")
     st.session_state.messages.append({"role": "assistant", "content": st.session_state.response})
     if st.button("Search"):
         st.write("Thinking!")
@@ -130,7 +130,7 @@ with tab1:
             container.write("With that being said, I might be confused with something else, make sure to double check!")
         elif st.session_state.lost is True:
             container.markdown(st.session_state.answer)
-            container.write("I am definitely lost, try your question again or check the contents of you pdf to see if it is relevant.")
+            container.write("I am probably lost, so my answer may not be accurate.")
         else:
             container.markdown(st.session_state.answer)
             container.write("Don't forget I get confused too!")
@@ -330,7 +330,7 @@ with tab5:
     # -------feedback area------ #
     st.title("Feedback page")
     st.write("Write your feed back here.")
-    feedback = st.text_input("type feedback here")
+    feedback = st.text_input("Type feedback here")
     with open("count.txt", "a") as f:
         f.write(f"\n {feedback}")
     with open("count.txt") as f:
