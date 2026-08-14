@@ -64,11 +64,16 @@ if overlap >= chunk_size:
     st.sidebar.error(
         "Overlap must be smaller than chunk size."
     )
-sentiment_mapping = [":material/thumb_down:", ":material/thumb_up:"]
-selected = st.feedback("thumbs")
-if selected is not None:
-    st.write(f"You selected: {sentiment_mapping[selected]}")
 
+with st.sidebar:
+    st.write("Write your feed back here")
+    feedback = st.text_input("type feedback here")
+    with open("count.txt", "a") as f:
+        f.write(f"\n {feedback}")
+    with open("count.txt") as f:
+        savedFeed = f.read()
+    sideCont = st.container(border=True)
+    sideCont.markdown(savedFeed.replace("\n", "  \n"))
 with tab1:
     st.title("Pdf file reader")
     st.write("This is a Pdf reader, import a pdf here and ask questions about it.")
