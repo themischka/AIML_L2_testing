@@ -339,5 +339,9 @@ with tab5:
     sideCont.markdown(savedFeed.replace("\n", "  \n"))
 with tab6:
     st.title("About")
-    st.text_area("This website was built with streamlit and python, during the Circuit Stream AIML L2 course.")
+    st.write(
+        "This website was built with streamlit and python, during the Circuit Stream AIML L2 course."
+        "The main goal of the AIML L2 bootcamp was to learn about machine learning and ai and this website reflects that learning and also some side projects learned in the process."
+        "This website is still a work in progress, I plan to add more to it soon, like in the database tab I have the code for it I just need to add it soon."
+    )
 
