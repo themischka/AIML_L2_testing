@@ -34,7 +34,7 @@ if "overlap" not in st.session_state:
     st.session_state.overlap = 150
 
 # -------formatting tabs------ #
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["PDF file reader", "Sample PDFs provided", "Mad-Lib Maker", "Ask the database", "Feedback"])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["PDF file reader", "Sample PDFs provided", "Mad-Lib Maker", "Ask the database", "Feedback", "About"])
 
 # -------formatting sidebar------ #
 st.sidebar.header("RAG Settings")
@@ -337,3 +337,7 @@ with tab5:
         savedFeed = f.read()
     sideCont = st.container(border=True)
     sideCont.markdown(savedFeed.replace("\n", "  \n"))
+with tab6:
+    st.title("About")
+    st.text_area("This website was built with streamlit and python, during the Circuit Stream AIML L2 course.")
+
