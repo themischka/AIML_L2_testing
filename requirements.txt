@@ -3,4 +3,4 @@ streamlit
 datetime
 pypdf
 groq
-base64
+# base64

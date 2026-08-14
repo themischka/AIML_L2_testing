@@ -5,7 +5,7 @@ from pypdf import PdfReader
 import chromadb
 import streamlit as st
 import datetime
-import base64
+# import base64
 
 # vars
 tone = str()
@@ -99,21 +99,21 @@ with tab1:
         st.session_state.collection = collection
         st.write("Chunks added to knowledge base")
         data = file.read()
-        with st.container():
-            st.subheader("PDF Preview")
-
-            base64_pdf = base64.b64encode(data).decode("utf-8")
-
-            pdf_display = f"""
-            <iframe
-                src="data:application/pdf;base64,{base64_pdf}"
-                width="100%"
-                height="800"
-                type="application/pdf">
-            </iframe>
-            """
-
-            st.markdown(pdf_display, unsafe_allow_html=True)
+        # with st.container():
+        #     st.subheader("PDF Preview")
+        #
+        #     base64_pdf = base64.b64encode(data).decode("utf-8")
+        #
+        #     pdf_display = f"""
+        #     <iframe
+        #         src="data:application/pdf;base64,{base64_pdf}"
+        #         width="100%"
+        #         height="800"
+        #         type="application/pdf">
+        #     </iframe>
+        #     """
+        #
+        #     st.markdown(pdf_display, unsafe_allow_html=True)
     question = st.text_input("ask about the doc")
     # if question := st.chat_input("Ask about the document"):
     #     st.session_state.messages.append({"role": "user", "content": question})
